@@ -22,7 +22,9 @@ import Link from "next/link";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase/firebase-config";
 import { useAuth } from "@/context/AuthContext";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import Logo from "@/components/shared/Logo";
 
 export const menuItems = [
   {
@@ -60,37 +62,25 @@ export const menuItems = [
 const MenuLink = ({ item }) => (
   <Link
     href={item.path}
-    className="flex items-center py-5 px-4 text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
+    className="flex font-mont items-center gap-2 py-5 px-4 text-gray-300 hover:text-white hover:bg-gray-700 rounded-lg transition-colors"
   >
-    <span className="mr-4">{item.icon}</span>
+    <span className="">{item.icon}</span>
     <span className="hidden lg:inline">{item.title}</span>
   </Link>
 );
 
 const Sidebar = () => {
-  const { user } = useAuth();
-  const isLoggedIn = user?.accessToken;
-
-  if (!isLoggedIn) {
-    redirect("/login");
-  }
-
-  // console.log(user);
+  const router = useRouter();
   const handleLogout = async () => {
     await signOut(auth);
+    Cookies.remove("accessToken");
+    localStorage.removeItem("userInfo");
+    router.replace("/login");
   };
   return (
-    <div className="bg-gray-800 text-white h-screen w-16 lg:w-52 transition-all duration-300 ease-in-out flex flex-col">
-      <div className="flex flex-col items-center h-full py-6 px-4">
-        <Link
-          href="/dashboard"
-          className="mb-6 text-center flex items-center justify-center lg:justify-start gap-2 p-4"
-        >
-          <LuRadar size={22} />
-          <span className="text-xl font-semibold hidden lg:inline">
-            CryptoRadar
-          </span>
-        </Link>
+    <div className="bg-gray-800 text-white h-screen w-16 lg:w-52 transition-all duration-300 ease-in-out flex flex-col border-r border-gray-400">
+      <div className="flex flex-col items-center h-full py-6">
+        <Logo />
 
         <nav className="flex-grow">
           {menuItems.map((item) => (
@@ -100,13 +90,13 @@ const Sidebar = () => {
           ))}
         </nav>
 
-        <div className="mt-auto flex flex-col items-center lg:items-start space-y-6 -ml-2">
+        <div className="mt-auto flex flex-col items-center lg:items-start space-y-6">
           <button
-            className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
+            className="flex items-center gap-2 md:pr-7 text-gray-300 hover:text-white transition-colors"
             onClick={handleLogout}
           >
             <LogOut size={20} />
-            <span className=" hidden lg:inline">Logout</span>
+            <span className=" hidden lg:inline font-mont">Logout</span>
           </button>
         </div>
       </div>

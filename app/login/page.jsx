@@ -5,9 +5,12 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase/firebase-config";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { getAccessToken } from "@/utils/getAccessToken";
+import Logo from "@/components/shared/Logo";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,15 +20,28 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push("/dashboard");
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const user = userCredential.user;
+      localStorage.setItem("userInfo", JSON.stringify(user));
+
+      // Get the access token
+      const accessToken = await user.getIdToken();
+
+      // Store the token in a cookie that expires in 7 days
+      Cookies.set("accessToken", accessToken, { expires: 7 });
+      router.replace("/dashboard");
     } catch (error) {
       console.error("Error signing in:", error);
     }
   };
 
   return (
-    <div className="flex items-center justify-center  h-screen">
+    <div className="flex items-center justify-center h-screen">
       <div className="max-w-md w-full mt-10 mx-auto rounded-none md:rounded-2xl  bg-white border border-[#121212]  dark:bg-black p-4 md:p-8 shadow-input">
         <h1 className="text-center text-xl font-bold">Login</h1>
         <form className="my-8" onSubmit={handleSubmit}>
