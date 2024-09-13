@@ -1,19 +1,25 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { MdNotifications, MdPublic } from "react-icons/md";
 import { Moon, Sun } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
-const Navbar = ({ details }) => {
-  const { user } = details;
+const Navbar = () => {
+  const { user } = useAuth();
+
+  function getNameBeforeAt(email) {
+    const name = email?.split("@")[0];
+    return name;
+  }
+
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   return (
     <nav className="flex justify-between items-center bg-gray-800 p-4">
       <div>
         <h1 className="text-xl md:text-2xl text-white capitalize">
-          Okaeri, {user.firstName}
+          Okaeri, {getNameBeforeAt(user?.email)}
         </h1>
       </div>
 

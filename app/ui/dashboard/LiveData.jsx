@@ -1,5 +1,5 @@
 "use client";
-import { payments } from "@/utils/demo";
+
 import { Button } from "@/components/ui/button";
 import {
   Table,

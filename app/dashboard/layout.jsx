@@ -5,15 +5,13 @@ import { getSession } from "../../utils/getSession";
 import Footer from "@/components/shared/Footer";
 
 const DashboardLayout = async ({ children }) => {
-  const details = await getSession();
-
   return (
     <>
       <div className="flex relative h-screen overflow-hidden">
         <Sidebar />
 
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
-          <Navbar details={details} />
+          <Navbar />
           {children}
           <Footer />
         </main>

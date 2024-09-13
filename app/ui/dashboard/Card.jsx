@@ -33,7 +33,7 @@ const DashCard = () => {
 
   return (
     <>
-      {coins.slice(0, 4).map((coin, i) => (
+      {coins?.slice(0, 4).map((coin, i) => (
         <CoinCard coin={coin} key={coin.id} />
       ))}
     </>

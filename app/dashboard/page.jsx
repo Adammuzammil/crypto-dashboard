@@ -11,11 +11,11 @@ import MarketCap from "../ui/dashboard/MarketCap";
 import LiveData from "../ui/dashboard/LiveData";
 
 const Dashboard = async () => {
-  const session = await getSession();
-  const user = session?.user;
-  if (!user) {
-    redirect("/login");
-  }
+  // const session = await getSession();
+  // const user = session?.user;
+  // if (!user) {
+  //   redirect("/login");
+  // }
   return (
     <div className="container mx-auto px-4 py-4">
       <div className="flex flex-col space-y-8">
