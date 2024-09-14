@@ -11,14 +11,14 @@ import {
 
 const CointextInfo = ({ name }) => {
   const id = name.toLowerCase();
-  const url = `https://api.coingecko.com/api/v3/coins/${id}`;
+  const url = `https://api.coingecko.com/api/v3/coins/bitcoin`;
   const [info, setInfo] = useState();
 
   useEffect(() => {
     const getPriceData = async () => {
       const response = await fetch(url);
       const data = await response.json();
-      //   console.log(data);
+      console.log(data);
       setInfo(data);
     };
 

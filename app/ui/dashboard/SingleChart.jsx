@@ -55,8 +55,19 @@ const SingleChart = ({ name, selectedPeriod, selectedTimeFrame }) => {
     return null;
   }
 
+  function formatYAxis(value) {
+    if (value >= 1e9) {
+      return (value / 1e9).toFixed(1) + "B"; // Billion
+    } else if (value >= 1e6) {
+      return (value / 1e6).toFixed(1) + "M"; // Million
+    } else if (value >= 1e3) {
+      return (value / 1e3).toFixed(1) + "K"; // Thousand
+    }
+    return value; // Return the value as is if it's less than 1000
+  }
+
   return (
-    <div className="w-full h-[350px] md:h-[400px] lg:h-[450px]">
+    <div className="h-[350px] md:h-[400px] lg:h-[450px]">
       <ResponsiveContainer width="100%" height="90%">
         <LineChart
           data={history}
@@ -92,6 +103,7 @@ const SingleChart = ({ name, selectedPeriod, selectedTimeFrame }) => {
             tickMargin={12}
             tickLine={false}
             padding={{ right: 20 }}
+            tickFormatter={formatYAxis}
           />
           <Tooltip content={<CustomTooltip />} cursor={false} />
           {/* <Legend /> */}

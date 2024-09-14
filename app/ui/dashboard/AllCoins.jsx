@@ -114,9 +114,9 @@ const AllCoins = () => {
           onChange={handleSearch}
         />
       </div>
-      <div className="bg-white rounded-xl shadow-xl">
+      <div className="bg-white dark:bg-gray-800 rounded-xl">
         <div className="p-4">
-          <h2 className="text-2xl mt-2">Live Market Value</h2>
+          <h2 className="text-2xl my-2 pl-2">Live Market Value</h2>
         </div>
         <Table className="w-full">
           <TableHeader>
@@ -141,7 +141,7 @@ const AllCoins = () => {
                 <TableCell className="cursor-pointer">
                   <Star size={15} fill="orange" color="orange" />
                 </TableCell>
-                <Link href={`/coins/${coin?.uuid}`} passHref>
+                <Link href={`/coins/${coin?.name}`} passHref>
                   <TableCell className="cursor-pointer">
                     <div className="flex items-center gap-2">
                       <img

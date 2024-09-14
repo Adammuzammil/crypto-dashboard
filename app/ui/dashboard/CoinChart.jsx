@@ -19,9 +19,11 @@ const CoinChart = ({ name }) => {
   return (
     <div className="mt-6 bg-white rounded">
       <div className="p-8">
-        <h1 className="text-xl font-semibold">Overview</h1>
+        <h1 className="text-base md:text-xl font-semibold text-center">
+          Overview
+        </h1>
 
-        <div className="py-8 flex  items-center justify-between">
+        <div className="py-8 flex flex-col md:flex-row items-center justify-between">
           <Tabs
             defaultValue="prices"
             className="w-fit"

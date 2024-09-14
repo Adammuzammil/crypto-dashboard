@@ -97,7 +97,7 @@ const OtherInfo = ({ name }) => {
         <div className="flex items-center justify-between">
           <span className="text-gray-400">Community</span>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col md:flex-row items-center gap-3">
             {info?.links?.twitter_screen_name && (
               <div className="flex items-center gap-1 bg-gray-200 p-1 px-2 rounded-lg text-xs font-bold">
                 <Link

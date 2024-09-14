@@ -60,7 +60,7 @@ const LiveData = () => {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-xl">
+    <div className="bg-white rounded-xl shadow-xl dark:bg-gray-800">
       <div className="p-4">
         <h2 className="text-2xl mt-2">Latest Market</h2>
       </div>
@@ -76,7 +76,7 @@ const LiveData = () => {
               </Button>
             </TableHead>
             <TableHead className="">24h Volume</TableHead>
-            <TableHead className="">Market Cap</TableHead>
+            <TableHead className="text-center">Market Cap</TableHead>
             <TableHead className="">Last 7 Days</TableHead>
           </TableRow>
         </TableHeader>

@@ -38,7 +38,9 @@ const Coins = () => {
 
   return (
     <div className="container mx-auto mt-6">
-      <h1 className="text-4xl font-semibold my-2 p-2">Crypto Coins</h1>
+      <h1 className="text-4xl font-semibold my-2 p-2 dark:text-white">
+        Crypto Coins
+      </h1>
 
       <AllCoins coins={coins} />
     </div>
