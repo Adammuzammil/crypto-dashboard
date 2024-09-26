@@ -44,24 +44,22 @@ const MarketCap = () => {
   }
 
   return (
-    <div className="h-full">
-      <Card className="">
-        <CardHeader>
-          <CardTitle className="text-2xl">Market Cap</CardTitle>
-        </CardHeader>
-        {coins?.slice(0, 7).map((coin, i) => (
-          <CardContent key={i}>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <img src={coin?.iconUrl} alt="logo" className="h-7 w-7" />
-                <span>{coin?.name}</span>
-              </div>
-              <p>${formatMarketCap(coin?.marketCap)}</p>
+    <Card className="shadow-md">
+      <CardHeader>
+        <CardTitle className="text-2xl">Market Cap</CardTitle>
+      </CardHeader>
+      {coins?.slice(0, 7).map((coin, i) => (
+        <CardContent key={i}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <img src={coin?.iconUrl} alt="logo" className="h-7 w-7" />
+              <span>{coin?.name}</span>
             </div>
-          </CardContent>
-        ))}
-      </Card>
-    </div>
+            <p>${formatMarketCap(coin?.marketCap)}</p>
+          </div>
+        </CardContent>
+      ))}
+    </Card>
   );
 };
 

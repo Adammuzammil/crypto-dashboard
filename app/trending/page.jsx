@@ -22,7 +22,9 @@ const Trending = () => {
   return (
     <div className="container mx-auto p-4 px-6 mt-8">
       <div className="my-6">
-        <h1 className="text-3xl font-bold">Trending Coins</h1>
+        <h1 className="text-3xl font-bold dark:text-white text-black">
+          Trending Coins
+        </h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-6 pt-4">
         {trending?.map((coin, i) => (

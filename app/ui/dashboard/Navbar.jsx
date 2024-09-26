@@ -21,7 +21,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex justify-between items-center bg-white dark:bg-gray-800 p-4 mt-2 mx-4 rounded-lg">
+    <nav className="flex justify-between items-center bg-white dark:bg-gray-800 p-4 mt-2 mx-4 rounded-lg shadow-md">
       <div>
         <h1 className="text-xl md:text-2xl dark:text-white text-black font-medium capitalize font-mont">
           Okaeri, {getNameBeforeAt(user?.email)}

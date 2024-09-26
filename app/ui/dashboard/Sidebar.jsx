@@ -62,7 +62,7 @@ export const menuItems = [
 const MenuLink = ({ item }) => (
   <Link
     href={item.path}
-    className="flex font-mont items-center gap-2 py-5 px-4 text-black hover:text-white hover:bg-gray-300 rounded-lg transition-colors"
+    className="flex font-mont items-center gap-3 py-5 px-4 text-black hover:text-white dark:text-white hover:bg-gray-300 rounded-lg transition-colors"
   >
     <span className="">{item.icon}</span>
     <span className="hidden lg:inline">{item.title}</span>
@@ -78,10 +78,9 @@ const Sidebar = () => {
     router.replace("/login");
   };
   return (
-    <div className="bg-white text-black h-screen w-16 lg:w-52 transition-all duration-300 ease-in-out flex flex-col border-r border-gray-400">
+    <div className="bg-white dark:bg-gray-800 text-black dark:text-white h-screen w-16 lg:w-52 transition-all duration-300 ease-in-out flex flex-col border-r border-gray-400">
       <div className="flex flex-col items-center h-full py-6">
         <Logo />
-
         <nav className="flex-grow">
           {menuItems.map((item) => (
             <div key={item.title} className="">
@@ -89,10 +88,9 @@ const Sidebar = () => {
             </div>
           ))}
         </nav>
-
         <div className="mt-auto flex flex-col items-center lg:items-start space-y-6">
           <button
-            className="flex items-center bg-white gap-2 md:pr-7 text-black hover:text-white transition-colors"
+            className="flex items-center bg-white dark:bg-gray-800 gap-2 md:pr-7 text-black dark:text-white hover:text-white transition-colors"
             onClick={handleLogout}
           >
             <LogOut size={20} />
