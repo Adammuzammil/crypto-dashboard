@@ -14,7 +14,7 @@ const Logo = () => {
     <>
       <Link
         href="/dashboard"
-        className="mb-6 text-center flex items-center justify-center lg:justify-start gap-2 p-4"
+        className="text-center flex items-center justify-center lg:justify-start gap-2 p-4"
       >
         {theme === "dark" ? (
           <img src="/cr.svg" alt="" />
