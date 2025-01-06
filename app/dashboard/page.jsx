@@ -9,12 +9,16 @@ import LiveData from "../ui/dashboard/LiveData";
 import { getAccessToken } from "@/utils/getAccessToken";
 import { getUserInfo } from "@/utils/jwtDecode";
 import { useAuth } from "@/context/AuthContext";
+import GlobalStats from "@/components/shared/GlobalStats";
 
 const Dashboard = () => {
   return (
-    <div className="container mx-auto px-4 py-4">
+    <div className=" p-4 px-6 container mx-auto">
       <div className="flex flex-col space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="lg:col-span-4">
+            <GlobalStats />
+          </div>
           <DashCard />
         </div>
 

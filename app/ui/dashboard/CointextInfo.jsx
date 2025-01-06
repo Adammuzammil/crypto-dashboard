@@ -37,7 +37,7 @@ const CointextInfo = ({ name }) => {
   };
 
   return (
-    <div className="mt-2 bg-white rounded">
+    <div className="mt-2 bg-white dark:bg-card rounded">
       <div className="px-6 py-4">
         <h1 className="text-2xl font-semibold text-green-600">Basic Info</h1>
 

@@ -10,7 +10,8 @@ import OtherInfo from "./OtherInfo";
 
 const SingleCoin = ({ data }) => {
   console.log(data);
-  const [coin, setCoin] = useState(data?.data?.coin);
+  const [coin, setCoin] = useState(data?.name);
+  console.log(coin);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -96,7 +97,7 @@ const SingleCoin = ({ data }) => {
           {/* Coin Info */}
 
           <div className="grid gap-1 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 py-5">
-            <InfoCard
+            {/* <InfoCard
               title="Market cap"
               value={data?.market_data?.market_cap?.usd}
               change={
@@ -106,6 +107,14 @@ const SingleCoin = ({ data }) => {
               desc="Market Cap = Current Price x Circulating Supply"
               subdesc={
                 "Refers to the total market value of a cryptocurrency’s circulating supply. It is similar to the stock market’s measurement of multiplying price per share by shares readily available in the market (not held & locked by insiders, governments)"
+              }
+            /> */}
+            <InfoCard
+              title="Circulating supply"
+              value={data?.market_data?.circulating_supply}
+              type="number"
+              desc={
+                "The amount of coins that are circulating in the market and are tradeable by the public. It is comparable to looking at shares readily available in the market (not held & locked by insiders, governments)."
               }
             />
             <InfoCard
@@ -119,22 +128,20 @@ const SingleCoin = ({ data }) => {
                 "Fully Diluted Valuation (FDV) is the theoretical market capitalization of a coin if the entirety of its supply is in circulation, based on its current market price. The FDV value is theoretical as increasing the circulating supply of a coin may impact its market price. Also depending on the tokenomics, emission schedule or lock-up period of a coin's supply, it may take a significant time before its entire supply is released into circulation."
               }
             />
-            {/* <InfoCard
-              title="24 Hour Trading Vol"
-              value={coin?.["24hVolume"]}
-              change={coin?.change}
+            <InfoCard
+              title="All time high"
+              value={data?.market_data?.ath?.usd}
+              change={data?.market_data?.ath_change_percentage?.usd}
               desc={
                 "A measure of a cryptocurrency trading volume across all tracked platforms in the last 24 hours. This is tracked on a rolling 24-hour basis with no open/closing times"
               }
-            /> */}
+            />
             <InfoCard
-              title="Circulating supply"
-              value={data?.market_data?.circulating_supply}
-              type="number"
-              symbol={coin?.symbol.toUpperCase()}
-              change={coin?.change}
+              title="All time low"
+              value={data?.market_data?.atl?.usd}
+              change={data?.market_data?.atl_change_percentage?.usd}
               desc={
-                "The amount of coins that are circulating in the market and are tradeable by the public. It is comparable to looking at shares readily available in the market (not held & locked by insiders, governments)."
+                "A measure of a cryptocurrency trading volume across all tracked platforms in the last 24 hours. This is tracked on a rolling 24-hour basis with no open/closing times"
               }
             />
           </div>
@@ -166,3 +173,5 @@ const SingleCoin = ({ data }) => {
 };
 
 export default SingleCoin;
+//45,889,583,066
+//46,773,906,601

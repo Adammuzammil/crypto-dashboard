@@ -20,9 +20,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { ChevronDown } from "lucide-react";
+import { AlertCircle, ChevronDown } from "lucide-react";
 
 import {
   Select,
@@ -32,6 +32,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import AnalyticsChart from "./AnalyticsChart";
+import SingleChart from "./SingleChart";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const data = [
   {
@@ -71,17 +74,26 @@ const data = [
   },
 ];
 
+const TIME_PERIODS = [
+  { value: "1", label: "Day" },
+  { value: "7", label: "Week" },
+  { value: "30", label: "Month" },
+  { value: "365", label: "Year" },
+];
+
 const Chart = () => {
   const [coins, setCoins] = useState([]);
   const [selectedCoin, setSelectedCoin] = useState(null);
   const [triggerWidth, setTriggerWidth] = useState(0);
   const [selectedPeriod, setSelectedPeriod] = useState("24h");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const triggerRef = useRef(null);
+  console.log(selectedCoin);
 
   const handleCoinChange = (value) => {
     const coin = coins.find((c) => c.name === value);
     setSelectedCoin(coin);
-    // console.log(coin);
   };
 
   const handlePeriodChange = (value) => {
@@ -99,66 +111,110 @@ const Chart = () => {
     }
   }, []);
 
-  const getCoinsData = async () => {
+  const getCoinsData = useCallback(async () => {
     try {
-      const response = await axios.get("/api/coins");
-      const fetchedCoins = response?.data?.data?.coins;
-      setCoins(fetchedCoins);
-      if (fetchedCoins && fetchedCoins.length > 0) {
-        setSelectedCoin(fetchedCoins[0]);
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-  return (
-    <div className="h-[450px] bg-gray-800 p-5 rounded-md">
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-1 mt-2">
-          <div>
-            <h2 className=" text-white text-2xl mb-2">Analytics</h2>
-          </div>
-          <div className="flex flex-col md:flex-row items-center gap-3">
-            <Tabs
-              defaultValue="24h"
-              className="w-fit"
-              onValueChange={handlePeriodChange}
-            >
-              <TabsList>
-                <TabsTrigger value="24h">Day</TabsTrigger>
-                <TabsTrigger value="7d">Week</TabsTrigger>
-                <TabsTrigger value="30d">Month</TabsTrigger>
-                <TabsTrigger value="1y">Year</TabsTrigger>
-              </TabsList>
-            </Tabs>
+      const response = await fetch("/api/coins");
+      const data = await response.json();
 
-            <Select onValueChange={handleCoinChange}>
-              <SelectTrigger className="w-32" ref={triggerRef}>
-                <SelectValue placeholder="Bitcoin" />
-              </SelectTrigger>
-              <SelectContent className="h-[200px] overflow-y-auto w-32 max-w-[90vw]">
-                {coins?.map((coin) => (
-                  <SelectItem key={coin.id} value={coin.name}>
-                    <div className="flex items-center gap-2">
-                      <img src={coin?.iconUrl} alt="" className="h-5 w-5" />
-                      <span className="truncate">{coin.name}</span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+      if (!data?.data?.coins) {
+        throw new Error("Invalid data format received");
+      }
+
+      const fetchedCoins = data.data.coins;
+      setCoins(fetchedCoins);
+      setSelectedCoin(fetchedCoins[0]);
+    } catch (error) {
+      setError(error.message || "Failed to fetch cryptocurrency data");
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    getCoinsData();
+  }, [getCoinsData]);
+
+  if (isLoading) {
+    return (
+      <Card className="mt-4 animate-pulse">
+        <CardContent className="p-4 md:p-6 lg:p-8">
+          <div className="h-8 bg-gray-200 rounded w-48 mx-auto mb-8" />
+          <div className="h-96 bg-gray-100 rounded" />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (error) {
+    return (
+      <Alert variant="destructive" className="mt-4">
+        <AlertCircle className="h-4 w-4" />
+        <AlertDescription>{error}</AlertDescription>
+      </Alert>
+    );
+  }
+
+  return (
+    <Card className="mt-4 border bg-card">
+      <CardContent className="p-4 md:p-6 lg:p-8">
+        <CardTitle className="text-xl md:text-2xl font-bold text-center mb-8 text-card-foreground">
+          Price Overview
+        </CardTitle>
+
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+          <Select onValueChange={handleCoinChange}>
+            <SelectTrigger className="w-40 bg-background" ref={triggerRef}>
+              <SelectValue placeholder="Bitcoin" />
+            </SelectTrigger>
+            <SelectContent className="max-h-[300px] ">
+              {coins?.map((coin) => (
+                <SelectItem
+                  key={coin.id}
+                  value={coin.name}
+                  className="cursor-pointer hover:bg-accent"
+                >
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={coin?.iconUrl}
+                      alt=""
+                      className="h-5 w-5 object-contain"
+                      loading="lazy"
+                    />
+                    <span className="truncate">{coin.name}</span>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Tabs
+            defaultValue="1"
+            className="w-full sm:w-auto"
+            onValueChange={handlePeriodChange}
+          >
+            <TabsList className="w-full sm:w-auto grid grid-cols-4 sm:flex bg-muted">
+              {TIME_PERIODS.map(({ value, label }) => (
+                <TabsTrigger
+                  key={value}
+                  value={value}
+                  className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                >
+                  {label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
         </div>
-        <div className="flex flex-col w-full md:pl-5 md:mt-3">
-          {selectedCoin && (
-            <AnalyticsChart
-              coin={selectedCoin}
-              selectedPeriod={selectedPeriod}
-            />
-          )}
+
+        <div className="mt-6 h-[400px]">
+          <SingleChart
+            name={selectedCoin?.name}
+            selectedPeriod="prices"
+            selectedTimeFrame={selectedPeriod}
+          />
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 

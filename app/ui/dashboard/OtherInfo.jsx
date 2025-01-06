@@ -50,7 +50,7 @@ const OtherInfo = ({ name }) => {
     .filter(({ domain }) => domain);
 
   return (
-    <div className="bg-white rounded-lg shadow mt-2 p-8 px-6">
+    <div className="bg-white dark:bg-card rounded-lg shadow mt-2 p-8 px-6">
       <h1 className="text-xl font-semibold">Info</h1>
 
       <hr className="my-4" />
@@ -65,7 +65,7 @@ const OtherInfo = ({ name }) => {
         {/* Website */}
         <div className="flex items-center justify-between">
           <span className="text-gray-400">Website</span>
-          <div className="flex items-center gap-2 bg-gray-200 p-1 px-2 rounded-lg">
+          <div className="flex items-center gap-2 bg-black p-1 px-2 rounded-lg">
             {domainNames.map(({ domain, url }, i) => (
               <span key={i} value={domain} className="text-xs font-bold">
                 {domain}
@@ -86,7 +86,7 @@ const OtherInfo = ({ name }) => {
             <span className="text-gray-400">Whitepaper</span>
             <Link
               href={info?.links?.whitepaper}
-              className="bg-gray-200 p-1 px-2 rounded-lg text-xs font-bold"
+              className="bg-black p-1 px-2 rounded-lg text-xs font-bold"
             >
               Whitepaper
             </Link>
@@ -99,7 +99,7 @@ const OtherInfo = ({ name }) => {
 
           <div className="flex flex-col md:flex-row items-center gap-3">
             {info?.links?.twitter_screen_name && (
-              <div className="flex items-center gap-1 bg-gray-200 p-1 px-2 rounded-lg text-xs font-bold">
+              <div className="flex items-center gap-1 bg-black p-1 px-2 rounded-lg text-xs font-bold">
                 <Link
                   href={`https://twitter.com/${info.links.twitter_screen_name}`}
                   target="_blank"
@@ -111,7 +111,7 @@ const OtherInfo = ({ name }) => {
               </div>
             )}
             {info?.links?.facebook_username && (
-              <div className="flex items-center gap-3 bg-gray-200 p-1 px-2 rounded-lg text-xs font-bold">
+              <div className="flex items-center gap-3 bg-black p-1 px-2 rounded-lg text-xs font-bold">
                 <Link
                   href={`https://facebook.com/${info.links.facebook_username}`}
                   target="_blank"
@@ -122,7 +122,7 @@ const OtherInfo = ({ name }) => {
                 <p className="text-xs">Facebook</p>
               </div>
             )}
-            <div className="flex items-center gap-2 bg-gray-200 p-1 px-2 rounded-lg">
+            <div className="flex items-center gap-2 bg-black p-1 px-2 rounded-lg">
               {domainNames.map(({ domain, url }, i) => (
                 <span key={i} value={domain} className="text-xs font-bold">
                   {domain}
@@ -136,7 +136,7 @@ const OtherInfo = ({ name }) => {
         <div className="flex items-center justify-between">
           <span className="text-gray-400">Github</span>
           {info?.links?.repos_url?.github[0] && (
-            <div className="flex items-center gap-3 bg-gray-200 p-1 px-2 rounded-lg text-xs font-bold">
+            <div className="flex items-center gap-3 bg-black p-1 px-2 rounded-lg text-xs font-bold">
               <Link
                 href={info?.links?.repos_url?.github[0]}
                 target="_blank"
@@ -153,7 +153,7 @@ const OtherInfo = ({ name }) => {
         <div className="flex items-center justify-between">
           <span className="text-gray-400">Social</span>
           {info?.links?.subreddit_url && (
-            <div className="flex items-center gap-3 bg-gray-200 p-1 px-2 rounded-lg text-xs font-bold">
+            <div className="flex items-center gap-3 bg-black p-1 px-2 rounded-lg text-xs font-bold">
               <Link
                 href={info?.links?.subreddit_url}
                 target="_blank"

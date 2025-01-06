@@ -37,7 +37,7 @@ const AnalyticsChart = ({ coin, selectedPeriod }) => {
     }
   };
 
-  //   console.log(history);
+  console.log("Coin", coin);
 
   useEffect(() => {
     getCoinsHistory();
@@ -124,7 +124,7 @@ const AnalyticsChart = ({ coin, selectedPeriod }) => {
           <Line
             type="monotone"
             dataKey="prices"
-            stroke="#fff"
+            stroke={coin?.color}
             strokeWidth={"1px"}
             dot={false}
           />

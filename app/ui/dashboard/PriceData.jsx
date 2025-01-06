@@ -26,7 +26,7 @@ const PriceData = ({ name }) => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow mt-6 p-8 px-6">
+    <div className="bg-white dark:bg-card rounded-lg shadow mt-6 p-8 px-6">
       <div className="flex gap-5 items-center">
         <img src={price?.image?.large} alt="" className="w-10 h-10" />
         <div className="">

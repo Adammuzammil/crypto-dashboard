@@ -56,6 +56,55 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
+        },
+        primaryDark: "#1B1C22", // Define your --primary-dark value
+        primaryMain: "#2D2E36", // Define your --primary-main value
+      },
+      gradientColorStops: {
+        "gradient-1": "hsl(var(--gradient-1))",
+        "gradient-2": "hsl(var(--gradient-2))",
+        "gradient-3": "hsl(var(--gradient-3))",
+        "gradient-4": "hsl(var(--gradient-4))",
+      },
+      backgroundImage: {
+        // Blue gradients
+        "blue-gradient":
+          "linear-gradient(to right, hsl(var(--gradient-1)), hsl(var(--gradient-2)))",
+        "blue-gradient-vertical":
+          "linear-gradient(to bottom, hsl(var(--gradient-1)), hsl(var(--gradient-2)))",
+        "blue-gradient-diagonal":
+          "linear-gradient(to bottom right, hsl(var(--gradient-1)), hsl(var(--gradient-2)))",
+
+        // Green gradients
+        "green-gradient":
+          "linear-gradient(to right, hsl(var(--gradient-3)), hsl(156, 84%, 61%))",
+        "green-gradient-vertical":
+          "linear-gradient(to bottom, hsl(var(--gradient-3)), hsl(156, 84%, 61%))",
+        "green-gradient-diagonal":
+          "linear-gradient(to bottom right, hsl(var(--gradient-3)), hsl(156, 84%, 61%))",
+
+        // Purple gradients
+        "purple-gradient":
+          "linear-gradient(to right, hsl(var(--gradient-4)), hsl(245, 80%, 84%))",
+        "purple-gradient-vertical":
+          "linear-gradient(to bottom, hsl(var(--gradient-4)), hsl(245, 80%, 84%))",
+        "purple-gradient-diagonal":
+          "linear-gradient(to bottom right, hsl(var(--gradient-4)), hsl(245, 80%, 84%))",
+
+        // Chart area gradients
+        "chart-gradient":
+          "linear-gradient(180deg, hsla(var(--chart-1), 0.2), hsla(var(--chart-1), 0))",
+        "chart-gradient-reverse":
+          "linear-gradient(0deg, hsla(var(--chart-1), 0.2), hsla(var(--chart-1), 0))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -64,12 +113,20 @@ module.exports = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
         },
       },
       animation: {

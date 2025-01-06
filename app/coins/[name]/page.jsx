@@ -12,8 +12,6 @@ const Coin = async ({ params }) => {
   const coinName = name.toLowerCase();
   const data = await getCoinData(coinName);
 
-  console.log("CG", data);
-
   return <div>{<SingleCoin data={data} />}</div>;
 };
 

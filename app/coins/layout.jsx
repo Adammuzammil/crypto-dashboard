@@ -3,18 +3,19 @@ import Sidebar from "../ui/dashboard/Sidebar";
 import { getSession } from "../../utils/getSession";
 import Footer from "@/components/shared/Footer";
 import Navbar from "../ui/dashboard/Navbar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import AppSidebar from "@/components/shared/app-sidebar";
 
 const CoinsLayout = async ({ children }) => {
   return (
-    <div className="flex relative h-screen overflow-hidden">
-      <Sidebar />
-
-      <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-black">
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
         <Navbar />
-        {children}
-        <Footer />
-      </main>
-    </div>
+
+        <main className="">{children}</main>
+      </SidebarInset>
+    </SidebarProvider>
   );
 };
 

@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/breadcrumb";
 
 const BreadCrumbs = ({ coin }) => {
+  console.log(coin);
   return (
     <div>
       <Breadcrumb>
@@ -21,7 +22,7 @@ const BreadCrumbs = ({ coin }) => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>{coin?.name}</BreadcrumbPage>
+            <BreadcrumbPage>{coin}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

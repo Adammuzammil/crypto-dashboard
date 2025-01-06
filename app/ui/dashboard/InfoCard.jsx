@@ -1,7 +1,13 @@
-"use client";
-
-import { Info, TrendingDown, TrendingUp } from "lucide-react";
 import React, { useState } from "react";
+import { Info, TrendingDown, TrendingUp } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+
+const formatValue = (value, type, symbol, locale, currency) =>
+  type === "currency"
+    ? new Intl.NumberFormat(locale, { style: "currency", currency }).format(
+        value
+      )
+    : `${new Intl.NumberFormat(locale).format(value)} ${symbol}`;
 
 const InfoCard = ({
   title,
@@ -15,49 +21,49 @@ const InfoCard = ({
   subdesc,
 }) => {
   const [showInfo, setShowInfo] = useState(false);
-  function formatValue(value, type, symbol, locale, currency) {
-    if (type === "currency") {
-      return new Intl.NumberFormat(locale, {
-        style: "currency",
-        currency: currency,
-      }).format(value);
-    } else {
-      return `${new Intl.NumberFormat(locale).format(value)} ${symbol}`;
-    }
-  }
 
   return (
-    <div className="bg-white rounded p-6 flex flex-col gap-14 relative">
-      <div className="flex items-center justify-between">
-        <h3>{title}</h3>
-        <div
-          className="relative inline-flex"
-          onMouseEnter={() => setShowInfo(true)}
-          onMouseLeave={() => setShowInfo(false)}
-        >
-          <Info className="h-4 w-4 cursor-pointer" />
-        </div>
-      </div>
+    <Card className="relative h-40">
+      <CardContent className="p-6 flex flex-col justify-between h-full">
+        <div className="flex items-center justify-between">
+          <h3 className="font-medium text-lg">{title}</h3>
+          <div
+            className="relative"
+            onMouseEnter={() => setShowInfo(true)}
+            onMouseLeave={() => setShowInfo(false)}
+          >
+            <Info className="h-4 w-4 cursor-pointer text-gray-500 hover:text-gray-700" />
 
-      {showInfo && (
-        <div className="absolute right-5 top-10 mt-2 bg-gray-100 text-black text-xs rounded-lg p-4 px-6 z-10 w-full">
-          <span className="inline-block pb-2 text-sm">{desc}</span>
-          <span className="text-sm">{subdesc}</span>
+            {showInfo && (
+              <div className="absolute right-0 top-6 bg-white shadow-lg rounded-lg p-4 w-64 z-10 border">
+                <p className="text-sm text-gray-700 mb-2">{desc}</p>
+                <p className="text-sm text-gray-500">{subdesc}</p>
+              </div>
+            )}
+          </div>
         </div>
-      )}
 
-      <div className="pb-4">
-        <p>{formatValue(value, type, symbol, locale, currency)}</p>
-        <span className={`${change < 0 ? "text-red-500" : "text-green-500"}`}>
-          {change < 0 ? (
-            <TrendingDown className="inline-block w-4 h-4  text-red-500" />
-          ) : (
-            <TrendingUp className="inline-block w-4 h-4 text-green-500" />
+        <div>
+          <p className="text-xl font-bold mb-2">
+            {formatValue(value, type, symbol, locale, currency)}
+          </p>
+          {change !== undefined && (
+            <div
+              className={`flex items-center gap-1 ${
+                change < 0 ? "text-red-500" : "text-green-500"
+              }`}
+            >
+              {change < 0 ? (
+                <TrendingDown className="w-4 h-4" />
+              ) : (
+                <TrendingUp className="w-4 h-4" />
+              )}
+              <span className="font-medium">{change}%</span>
+            </div>
           )}
-          {change || "N/A"}%
-        </span>
-      </div>
-    </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

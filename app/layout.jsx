@@ -1,10 +1,20 @@
-import { Inter } from "next/font/google";
+import {
+  Inter,
+  Space_Grotesk,
+  Manrope,
+  Plus_Jakarta_Sans,
+  DM_Sans,
+} from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/context/AuthContext";
 import AuthLayout from "@/AuthLayout";
 
 const inter = Inter({ subsets: ["latin"] });
+const space = Space_Grotesk({ subsets: ["latin"] });
+const manrope = Manrope({ subsets: ["latin"] });
+const plus = Plus_Jakarta_Sans({ subsets: ["latin"] });
+const dm = DM_Sans({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -14,7 +24,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={plus.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -22,7 +32,9 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <AuthProvider>
-            <AuthLayout>{children}</AuthLayout>
+            <AuthLayout>
+              <main>{children}</main>
+            </AuthLayout>
           </AuthProvider>
         </ThemeProvider>
       </body>
