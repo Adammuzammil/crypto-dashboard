@@ -34,7 +34,11 @@ export default function AuthLayout({ children }) {
   }, [pathname, router]);
 
   if (isLoading) {
-    return <div>Loading...</div>; // Or a more sophisticated loading indicator
+    return (
+      <div className="flex items-center justify-center h-screen">
+        Loading...
+      </div>
+    ); // Or a more sophisticated loading indicator
   }
 
   return children;

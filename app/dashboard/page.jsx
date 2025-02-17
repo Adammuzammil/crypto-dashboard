@@ -2,13 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import Chart from "../ui/dashboard/Chart";
-import { useRouter } from "next/navigation";
 import DashCard from "../ui/dashboard/Card";
 import MarketCap from "../ui/dashboard/MarketCap";
 import LiveData from "../ui/dashboard/LiveData";
-import { getAccessToken } from "@/utils/getAccessToken";
-import { getUserInfo } from "@/utils/jwtDecode";
-import { useAuth } from "@/context/AuthContext";
 import GlobalStats from "@/components/shared/GlobalStats";
 
 const Dashboard = () => {

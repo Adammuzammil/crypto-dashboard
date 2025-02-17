@@ -12,14 +12,11 @@ const Logo = () => {
   };
   return (
     <>
-      <Link
-        href="/dashboard"
-        className="text-center flex items-center justify-center lg:justify-start gap-2 p-4"
-      >
+      <Link href="/dashboard" className="block">
         {theme === "dark" ? (
-          <img src="/cr.svg" alt="" />
+          <img src="/kai.svg" alt="" className="size-8" />
         ) : (
-          <img src="/cryptoradar.svg" alt="" />
+          <img src="/kai.svg" alt="" className="h-8 w-8" />
         )}
       </Link>
     </>

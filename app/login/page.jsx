@@ -11,10 +11,15 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { getAccessToken } from "@/utils/getAccessToken";
 import Logo from "@/components/shared/Logo";
+import { ArrowRight, Check, ScanEye, Terminal, Wallet } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [viewPassword, setViewPassword] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -41,45 +46,70 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="max-w-md w-full mt-10 mx-auto rounded-none md:rounded-2xl  bg-white border border-[#121212]  dark:bg-black p-4 md:p-8 shadow-input">
-        <h1 className="text-center text-xl font-bold">Login</h1>
-        <form className="my-8" onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-8">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="email">Email Address</Label>
-              <Input
-                id="email"
-                placeholder="projectmayhem@fc.com"
-                type="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                placeholder="***********"
-                type="password"
-                name="password"
-                className="mb-5"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-4">
+      <div className="w-full max-w-lg bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-8 shadow-sm">
+        <div className="flex flex-col items-center mb-10">
+          <div className="mb-6">
+            <div className="h-12 w-12 bg-gray-300 dark:bg-gray-300 rounded-lg flex items-center justify-center">
+              <Logo className="text-white" />
             </div>
           </div>
 
-          <button className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]">
-            Login &rarr;
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
+            Welcome Back
+          </h1>
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            Sign in to your Kaizen account
+          </p>
+        </div>
+
+        <form className="space-y-7" onSubmit={handleSubmit}>
+          {error && (
+            <div className="flex items-center gap-2 p-3 bg-red-50 dark:bg-gray-900/50 text-red-700 dark:text-gray-400 rounded-lg border border-red-200 dark:border-gray-700">
+              <ShieldAlert size={18} />
+              <span className="text-sm">{error}</span>
+            </div>
+          )}
+
+          <div>
+            <Label className="text-sm font-medium text-gray-900 dark:text-gray-300">
+              Email
+            </Label>
+            <Input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              className="mt-2 bg-white dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 focus:ring-1 focus:ring-gray-900 dark:focus:ring-gray-600 h-11 text-gray-900 dark:text-gray-200"
+            />
+          </div>
+
+          <div>
+            <Label className="text-sm font-medium text-gray-900 dark:text-gray-300">
+              Password
+            </Label>
+            <Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="mt-2 bg-white dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 focus:ring-1 focus:ring-gray-900 dark:focus:ring-gray-600 h-11 text-gray-900 dark:text-gray-200"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full h-11 bg-gray-900 dark:bg-white rounded-lg font-medium text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors"
+          >
+            Sign In
           </button>
 
-          <p className="text-right text-neutral-600 text-sm max-w-sm mt-4 dark:text-neutral-300">
-            Don't have account?{" "}
-            <Link href="/register" className="hover:underline">
-              Register
+          <p className="text-center text-sm text-gray-700 dark:text-gray-400">
+            New to Kaizen?{" "}
+            <Link
+              href="/register"
+              className="font-medium text-gray-900 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
+            >
+              Create account
             </Link>
           </p>
         </form>
