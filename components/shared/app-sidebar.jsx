@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  BadgeJapaneseYen,
   Calendar,
   ChevronUp,
   GalleryVerticalEnd,
@@ -8,6 +9,7 @@ import {
   Inbox,
   Search,
   Settings,
+  TrendingUpIcon,
   User2,
 } from "lucide-react";
 
@@ -50,17 +52,12 @@ const items = [
   {
     title: "Trending",
     url: "/trending",
-    icon: Calendar,
+    icon: TrendingUpIcon,
   },
   {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Exchange Rate",
+    url: "/converter",
+    icon: BadgeJapaneseYen,
   },
 ];
 
@@ -87,14 +84,10 @@ function AppSidebar() {
       <SidebarHeader className="py-6">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              size="lg"
-              asChild
-              className="hover:bg-gray-400/10"
-            >
-              <a href="/dashboard" className="flex items-center gap-3">
+            <SidebarMenuButton size="lg" asChild className="py-4">
+              <a href="/dashboard" className="flex items-center gap-4 ">
                 <div
-                  className={`flex aspect-square items-center justify-center rounded-lg bg-white min-w-10 ${
+                  className={`flex aspect-square items-center justify-center rounded-lg bg-gray-300 min-w-10 ${
                     open ? "w-10 h-10" : "w-10 h-10"
                   }`}
                 >
@@ -102,15 +95,15 @@ function AppSidebar() {
                     src="/kai.svg"
                     alt="Kaizen Logo"
                     className={`object-contain transition-all duration-200 ${
-                      open ? "w-8 h-8" : "w-full h-full p-0.5 pr-2"
+                      open ? "w-8 h-8" : "w-full h-full p-1 pr-2"
                     }`}
                   />
                 </div>
-                <div className="flex flex-col gap-1 leading-none">
-                  <span className="text-lg font-semibold dark:text-white text-black">
+                <div className="flex flex-col gap-1.5 leading-none">
+                  <span className="text-xl font-semibold dark:text-white text-black">
                     Kaizen
                   </span>
-                  <span className="text-base text-gray-500">v1.0.0</span>
+                  <span className="text-sm text-gray-500">v1.0.0</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -119,7 +112,7 @@ function AppSidebar() {
       </SidebarHeader>
       <SidebarContent className="py-4">
         <SidebarGroup>
-          <SidebarMenu className="space-y-2">
+          <SidebarMenu className="space-y-3">
             {items.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton
@@ -130,7 +123,9 @@ function AppSidebar() {
                     href={item.url}
                     className="flex items-center gap-4 px-4 py-3 rounded-lg"
                   >
-                    <item.icon className="size-6 " />
+                    <div className="w-5 h-5 flex items-center justify-center">
+                      <item.icon className="w-full h-full" strokeWidth={1.5} />
+                    </div>
                     <span className="text-lg">{item.title}</span>
                   </a>
                 </SidebarMenuButton>
@@ -146,7 +141,7 @@ function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton className="px-4 py-3">
-                  <User2 className="size-6" />
+                  <User2 size={32} className="!w-[20px] !h-[20px]" />
                   <span className="text-lg ml-4">
                     {getNameBeforeAt(user?.email)}
                   </span>
@@ -157,7 +152,7 @@ function AppSidebar() {
                 side="top"
                 className="w-[--radix-popper-anchor-width]"
               >
-                <DropdownMenuItem className="text-lg">
+                <DropdownMenuItem className="text-base">
                   <span onClick={handleLogout} className="cursor-pointer">
                     Sign out
                   </span>

@@ -1,15 +1,7 @@
-import { FaUsers } from "react-icons/fa";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { TrendingDown, TrendingUp } from "lucide-react";
 import Image from "next/image";
 import { Sparklines, SparklinesLine } from "react-sparklines";
-import { TrendingDown, TrendingUp } from "lucide-react";
 
 const CoinCard = ({ coin }) => {
   const formatCurrency = (value) => {
@@ -21,63 +13,74 @@ const CoinCard = ({ coin }) => {
     }).format(value);
   };
 
-  const gradientStyle = {
-    background: `linear-gradient(to right top, ${coin.color}, #38bdf8)`, // sky-400 in hex
-  };
-
-  const isPositiveChange = !coin?.change?.startsWith("-");
+  const isPositiveChange = coin?.change >= 0;
 
   return (
-    <Card className="group hover:shadow-xl transition-all duration-300 overflow-hidden bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
-      <CardHeader className="pb-2">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="absolute inset-0 from-primary/20 to-primary/10 rounded-full animate-pulse" />
-              <div
-                className="relative p-2 bg-white dark:bg-gray-800 rounded-full shadow-lg transform group-hover:scale-110 transition-transform duration-300"
-                style={{
-                  background: "hsl(var(--card))",
-                }}
-              >
-                <Image
-                  src={coin?.iconUrl}
-                  width={32}
-                  height={32}
-                  alt={coin?.name}
-                  className="w-6 h-6"
-                />
-              </div>
-            </div>
-            <CardTitle className="text-lg font-semibold">
-              {coin?.name}
-            </CardTitle>
-          </div>
-          <span
-            className={`px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1
-            ${
-              isPositiveChange
-                ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
-            }`}
-          >
-            {isPositiveChange ? (
-              <TrendingUp className="w-4 h-4" />
-            ) : (
-              <TrendingDown className="w-4 h-4" />
-            )}
-            {isPositiveChange ? `+${coin.change}` : coin.change}%
-          </span>
+    <Card className="group relative hover:shadow-xl transition-all duration-300 overflow-hidden bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+      <div className="absolute bottom-0 left-0 w-32 h-32 sm:w-24 sm:h-24 opacity-20 transform scale-125 translate-x-[-15%] translate-y-[10%] rotate-45">
+        <Image
+          src={coin?.iconUrl}
+          layout="fill"
+          objectFit="contain"
+          alt={coin?.name}
+        />
+      </div>
+
+      <CardHeader className="pb-2 relative z-10 px-4">
+        {/* Coin Name & Icon */}
+        <div className="flex items-center gap-2">
+          <CardTitle className="text-black dark:text-white text-sm">
+            {coin?.name}
+            <span className="text-gray-600"> ({coin?.symbol})</span>
+          </CardTitle>
         </div>
       </CardHeader>
-      <CardContent>
-        <div className="mt-2">
-          <div className="text-2xl font-bold tracking-tight">
+
+      <CardContent className="flex justify-between items-center relative z-10 px-4">
+        {/* Coin Price & Change */}
+        <div className="flex flex-col gap-2">
+          <div className="text-lg sm:text-xl font-semibold text-black dark:text-white">
             {formatCurrency(coin?.price)}
           </div>
-          <div className="text-sm text-muted-foreground mt-1">
-            {coin?.symbol}
+          <div
+            className={`py-1 rounded-md text-sm font-bold w-fit ${
+              isPositiveChange
+                ? "text-green-600 dark:text-green-400"
+                : "text-red-600 dark:text-red-400"
+            }`}
+          >
+            {/* Arrow and percentage */}
+            {isPositiveChange ? (
+              <div className="flex items-center">
+                <TrendingUp
+                  className="text-green-600 dark:text-green-400 mr-1"
+                  size={16}
+                />
+                +{coin.change}%
+              </div>
+            ) : (
+              <div className="flex items-center">
+                <TrendingDown
+                  className="text-red-600 dark:text-red-400 mr-1"
+                  size={16}
+                />
+                {coin.change}%
+              </div>
+            )}
           </div>
+        </div>
+
+        {/* Small Graph on Right Side */}
+        <div className="w-16 h-10">
+          <Sparklines data={coin?.sparkline} width={100} height={40}>
+            <SparklinesLine
+              style={{
+                stroke: isPositiveChange ? "#4ade80" : "#f87171",
+                fill: "none",
+                strokeWidth: 2,
+              }}
+            />
+          </Sparklines>
         </div>
       </CardContent>
     </Card>
