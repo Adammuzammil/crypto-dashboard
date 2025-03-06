@@ -12,8 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const SingleChart = ({ name, selectedPeriod, selectedTimeFrame }) => {
-  const id = name?.toLowerCase();
+const SingleChart = ({ id, selectedPeriod, selectedTimeFrame }) => {
   const [history, setHistory] = useState([]);
   const [chartWidth, setChartWidth] = useState(0);
   const [currentDay, setCurrentDay] = useState(""); // Track current day

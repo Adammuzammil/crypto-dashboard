@@ -11,7 +11,6 @@ const Navbar = () => {
   const userData = localStorage.getItem("userInfo");
 
   const user = JSON.parse(userData);
-  console.log("User data: " + user);
   const { setTheme, theme } = useTheme();
 
   function getNameBeforeAt(email) {

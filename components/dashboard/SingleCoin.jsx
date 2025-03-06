@@ -9,9 +9,8 @@ import CointextInfo from "./CointextInfo";
 import OtherInfo from "./OtherInfo";
 
 const SingleCoin = ({ data }) => {
-  console.log(data);
-  const [coin, setCoin] = useState(data?.name);
-  console.log(coin);
+  const [coin, setCoin] = useState(data?.id);
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -30,6 +29,7 @@ const SingleCoin = ({ data }) => {
       currency: currency,
     }).format(value);
   }
+
   return (
     <div className="container mx-auto my-6">
       <div className="flex items-center cursor-pointer py-4">
@@ -43,7 +43,7 @@ const SingleCoin = ({ data }) => {
             <img
               src={data?.image?.large}
               alt={data?.name}
-              className="h-12 w-12 self-start"
+              className="h-24 w-24 self-start rounded-full shadow-md"
             />
             <div className="flex flex-col gap-6 justify-between py-2">
               <h2 className="text-lg font-bold">
@@ -97,18 +97,6 @@ const SingleCoin = ({ data }) => {
           {/* Coin Info */}
 
           <div className="grid gap-1 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 py-5">
-            {/* <InfoCard
-              title="Market cap"
-              value={data?.market_data?.market_cap?.usd}
-              change={
-                data?.market_data?.market_cap_change_percentage_24h_in_currency
-                  ?.usd
-              }
-              desc="Market Cap = Current Price x Circulating Supply"
-              subdesc={
-                "Refers to the total market value of a cryptocurrency’s circulating supply. It is similar to the stock market’s measurement of multiplying price per share by shares readily available in the market (not held & locked by insiders, governments)"
-              }
-            /> */}
             <InfoCard
               title="Circulating supply"
               value={data?.market_data?.circulating_supply}
@@ -150,20 +138,20 @@ const SingleCoin = ({ data }) => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 pb-6">
             <div className="lg:col-span-2">
-              <CoinChart name={data?.name} />
+              <CoinChart name={data?.id} />
             </div>
             <div>
-              <PriceData name={data?.name} />
+              <PriceData name={data} />
             </div>
           </div>
 
           {/* Coin textInfo */}
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-2 pb-6">
             <div className="lg:col-span-2">
-              <CointextInfo name={data?.name} />
+              <CointextInfo name={data} />
             </div>
             <div className="lg:col-span-2">
-              <OtherInfo name={data?.name} />
+              <OtherInfo info={data} />
             </div>
           </div>
         </div>

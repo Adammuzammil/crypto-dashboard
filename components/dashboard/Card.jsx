@@ -19,7 +19,7 @@ const DashCard = () => {
     try {
       setLoading(true);
       const { data } = await axios.get("/api/coins");
-      setCoins(data?.data?.coins);
+      setCoins(data.coins);
     } catch (error) {
       setError(error.message);
     } finally {

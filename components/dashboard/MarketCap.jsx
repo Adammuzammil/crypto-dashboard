@@ -24,11 +24,11 @@ const MarketCap = () => {
       const response = await fetch("/api/coins");
       const data = await response.json();
 
-      if (!data?.data?.coins) {
+      if (!data) {
         throw new Error("Invalid data format received");
       }
 
-      setCoins(data.data.coins);
+      setCoins(data.coins);
     } catch (error) {
       setError(error.message || "Failed to fetch cryptocurrency data");
     } finally {
@@ -105,7 +105,7 @@ const MarketCap = () => {
               <div className="flex items-center gap-4">
                 <div className="relative">
                   <img
-                    src={coin?.iconUrl}
+                    src={coin?.image}
                     alt={`${coin?.name} logo`}
                     className="h-8 w-8 object-contain"
                     loading={index > 2 ? "lazy" : "eager"}
@@ -116,42 +116,47 @@ const MarketCap = () => {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-medium">{coin?.name}</span>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-muted-foreground uppercase">
                     {coin?.symbol}
                   </span>
                 </div>
               </div>
               <div className="flex flex-col items-end">
-                <div className="flex items-center gap-1">
-                  <span className="font-medium">
-                    ${formatMarketCap(coin?.marketCap)}
+                <div className="flex items-center gap-4">
+                  <span className="font-medium flex items-center justify-center">
+                    ${formatMarketCap(coin?.market_cap)}
                   </span>
-                  {coin?.change && (
+                  {coin?.price_change_percentage_24h && (
                     <span
-                      className={`text-sm ${
-                        parseFloat(coin.change) >= 0
-                          ? "text-green-500"
-                          : "text-red-500"
+                      className={`inline-flex items-center gap-1 px-2 py-1 rounded-md ${
+                        coin?.price_change_percentage_24h < 0
+                          ? "text-red-600 "
+                          : "text-green-600 "
                       }`}
                     >
-                      {parseFloat(coin.change) >= 0 ? (
-                        <TrendingUp className="h-4 w-4" />
+                      {coin?.price_change_percentage_24h < 0 ? (
+                        <TrendingDown className="w-4 h-4" />
                       ) : (
-                        <TrendingDown className="h-4 w-4" />
+                        <TrendingUp className="w-4 h-4" />
                       )}
+                      <span className="text-sm font-medium">
+                        {coin?.price_change_percentage_24h?.toFixed(2)}%
+                      </span>
                     </span>
                   )}
                 </div>
-                {coin?.change && (
+                {coin?.price_change_percentage_24h && (
                   <span
                     className={`text-xs ${
-                      parseFloat(coin.change) >= 0
+                      parseFloat(coin?.price_change_percentage_24h) >= 0
                         ? "text-green-500"
                         : "text-red-500"
                     }`}
                   >
-                    {parseFloat(coin.change) >= 0 ? "+" : ""}
-                    {coin.change}%
+                    {parseFloat(coin.price_change_percentage_24h) >= 0
+                      ? "+"
+                      : ""}
+                    {coin.price_change_percentage_24h}%
                   </span>
                 )}
               </div>

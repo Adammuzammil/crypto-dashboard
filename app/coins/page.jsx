@@ -15,34 +15,41 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
 import { Input } from "@/components/ui/input";
-import AllCoins from "../ui/dashboard/AllCoins";
+import AllCoins from "../../components/dashboard/AllCoins";
 
 const Coins = () => {
-  const [coins, setCoins] = useState();
-  //   console.log(sortedData);
+  const [cryptoData, setCryptoData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getCoinsData();
+    const fetchCryptoData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("/api/coins");
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setCryptoData(data);
+      } catch (err) {
+        setError(err.message);
+        console.error("Failed to fetch crypto data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCryptoData();
   }, []);
 
-  const getCoinsData = async () => {
-    try {
-      const { data } = await axios.get("/api/coins?limit=10");
-      setCoins(data?.data?.coins);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  //   const handleStarClick = () => {};
+  if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="container mx-auto mt-6">
-      <h1 className="text-4xl font-semibold my-2 p-2 dark:text-white">
-        Crypto Coins
-      </h1>
-
-      <AllCoins coins={coins} />
+    <div className="container mx-auto my-6">
+      <AllCoins coins={cryptoData} />
     </div>
   );
 };

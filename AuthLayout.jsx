@@ -35,8 +35,11 @@ export default function AuthLayout({ children }) {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        Loading...
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900">
+        {/* Loading Text */}
+        <p className="mt-4 text-2xl font-semibold text-gray-800 dark:text-gray-300 animate-pulse">
+          Kaizen
+        </p>
       </div>
     ); // Or a more sophisticated loading indicator
   }

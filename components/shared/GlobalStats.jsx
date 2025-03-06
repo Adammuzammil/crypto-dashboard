@@ -11,9 +11,11 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
   TrendingDown,
+  RefreshCcw,
 } from "lucide-react";
 import { Alert, AlertDescription } from "../ui/alert";
 import { btcToUsd, convertBTCtoUSD } from "@/utils/btcConverter";
+import { Button } from "../ui/button";
 
 const GlobalStats = () => {
   const [stats, setStats] = useState([]);
@@ -54,16 +56,13 @@ const GlobalStats = () => {
     return (
       <Card className="shadow-md mt-4 animate-pulse">
         <CardHeader>
-          <div className="h-8 bg-gray-200 rounded w-32" />
+          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-32" />
         </CardHeader>
-        {[...Array(7)].map((_, i) => (
+        {[...Array(4)].map((_, i) => (
           <CardContent key={i} className="border-b last:border-b-0">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="h-7 w-7 rounded-full bg-gray-200" />
-                <div className="h-4 w-24 bg-gray-200 rounded" />
-              </div>
-              <div className="h-4 w-20 bg-gray-200 rounded" />
+              <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded" />
+              <div className="h-4 w-20 bg-gray-200 dark:bg-gray-700 rounded" />
             </div>
           </CardContent>
         ))}
@@ -73,9 +72,9 @@ const GlobalStats = () => {
 
   if (error) {
     return (
-      <Alert variant="destructive" className="mt-4">
-        <AlertCircle className="h-4 w-4" />
-        <AlertDescription>{error}</AlertDescription>
+      <Alert variant="destructive" className="mt-4 flex flex-col items-center">
+        <AlertCircle className="h-6 w-6 text-red-500 mb-2" />
+        <AlertDescription className="text-center">{error}</AlertDescription>
       </Alert>
     );
   }
@@ -109,8 +108,8 @@ const GlobalStats = () => {
             <span
               className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${
                 isPositiveChange
-                  ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                  : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                  ? " text-green-700  dark:text-green-400"
+                  : " text-red-700 dark:text-red-400"
               }`}
             >
               {isPositiveChange ? (

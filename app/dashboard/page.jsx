@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Chart from "../ui/dashboard/Chart";
-import DashCard from "../ui/dashboard/Card";
-import MarketCap from "../ui/dashboard/MarketCap";
-import LiveData from "../ui/dashboard/LiveData";
+import Chart from "../../components/dashboard/Chart";
+import DashCard from "../../components/dashboard/Card";
+import MarketCap from "../../components/dashboard/MarketCap";
+import LiveData from "../../components/dashboard/LiveData";
 import GlobalStats from "@/components/shared/GlobalStats";
 
 const Dashboard = () => {

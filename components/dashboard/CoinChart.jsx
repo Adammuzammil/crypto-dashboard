@@ -72,7 +72,7 @@ const CoinChart = ({ name }) => {
 
         <div className="mt-6">
           <SingleChart
-            name={name}
+            id={name}
             selectedPeriod={selectedPeriod}
             selectedTimeFrame={selectedTimeFrame}
           />

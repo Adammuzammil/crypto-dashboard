@@ -4,9 +4,11 @@ import {
   BadgeJapaneseYen,
   Calendar,
   ChevronUp,
+  Coins,
   GalleryVerticalEnd,
   Home,
   Inbox,
+  LayoutDashboard,
   Search,
   Settings,
   TrendingUpIcon,
@@ -42,12 +44,12 @@ const items = [
   {
     title: "Dashboard",
     url: "/dashboard",
-    icon: Home,
+    icon: LayoutDashboard,
   },
   {
     title: "Coins",
     url: "/coins",
-    icon: Inbox,
+    icon: Coins,
   },
   {
     title: "Trending",
@@ -80,7 +82,7 @@ function AppSidebar() {
     return name;
   }
   return (
-    <Sidebar variant="" collapsible="icon">
+    <Sidebar variant="" collapsible="icon" className="">
       <SidebarHeader className="py-6">
         <SidebarMenu>
           <SidebarMenuItem>
@@ -119,12 +121,12 @@ function AppSidebar() {
                   asChild
                   className="hover:bg-gray-400/10 transition-colors duration-200"
                 >
-                  <a
-                    href={item.url}
-                    className="flex items-center gap-4 px-4 py-3 rounded-lg"
-                  >
-                    <div className="w-5 h-5 flex items-center justify-center">
-                      <item.icon className="w-full h-full" strokeWidth={1.5} />
+                  <a href={item.url} className="flex items-center gap-4 ">
+                    <div className="min-w-[20px] flex items-center justify-center">
+                      <item.icon
+                        className="w-full h-full dark:text-white text-black"
+                        strokeWidth={1.5}
+                      />
                     </div>
                     <span className="text-lg">{item.title}</span>
                   </a>

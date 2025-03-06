@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import parse from "html-react-parser";
 import {
   Accordion,
@@ -10,20 +10,10 @@ import {
 } from "@/components/ui/accordion";
 
 const CointextInfo = ({ name }) => {
-  const id = name.toLowerCase();
-  const url = `https://api.coingecko.com/api/v3/coins/bitcoin`;
-  const [info, setInfo] = useState();
-
-  useEffect(() => {
-    const getPriceData = async () => {
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log(data);
-      setInfo(data);
-    };
-
-    getPriceData();
-  }, [name]);
+  console.log(name);
+  if (!name) {
+    return <p className="text-gray-500">No description available.</p>;
+  }
 
   // Custom options for html-react-parser
   const options = {
@@ -42,16 +32,12 @@ const CointextInfo = ({ name }) => {
         <h1 className="text-2xl font-semibold text-green-600">Basic Info</h1>
 
         <div className="py-4">
-          <div className="mt-2 text-sm text-gray-600 leading-relaxed">
+          <div className="mt-2 text-base text-gray-600 dark:text-white leading-relaxed">
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger>
-                  {" "}
-                  About {info?.name} ({info?.symbol?.toUpperCase()})
-                </AccordionTrigger>
-                <AccordionContent>
-                  {info?.description?.en &&
-                    parse(info?.description?.en, options)}
+                <AccordionTrigger>About {name?.name}</AccordionTrigger>
+                <AccordionContent className="text-sm text-black dark:text-white">
+                  {parse(name?.description?.en, options)}
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

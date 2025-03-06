@@ -1,10 +1,7 @@
 import React from "react";
-import Sidebar from "../ui/dashboard/Sidebar";
-import { getSession } from "../../utils/getSession";
-import Footer from "@/components/shared/Footer";
-import Navbar from "../ui/dashboard/Navbar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/shared/app-sidebar";
+import Navbar from "@/components/dashboard/Navbar";
 
 const CoinsLayout = async ({ children }) => {
   return (

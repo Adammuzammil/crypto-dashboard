@@ -26,19 +26,10 @@ const LiveData = () => {
   const getCoinsData = async () => {
     try {
       const { data } = await axios.get("/api/coins");
-      setCoins(data?.data?.coins);
+      setCoins(data.coins);
     } catch (error) {
       console.log(error.message);
     }
-  };
-
-  const getStatusClass = (status) => {
-    return classNames({
-      "text-blue-500": status === "processing",
-      "text-yellow-500": status === "pending",
-      "text-green-500": status === "completed",
-      "text-red-500": status === "failed",
-    });
   };
 
   function formatMarketCap(marketCap) {
@@ -85,46 +76,52 @@ const LiveData = () => {
             <TableRow key={i}>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <img
-                    src={coin?.iconUrl}
-                    alt={coin.name}
-                    className="w-7 h-7"
-                  />
+                  <img src={coin?.image} alt={coin.name} className="w-7 h-7" />
                   <div className="flex items-center gap-2">
                     <span> {coin.name}</span>
-                    <span className="text-xs text-gray-400 ">
+                    <span className="text-xs text-gray-400 uppercase">
                       {coin?.symbol}
                     </span>
                   </div>
                 </div>
               </TableCell>
               <TableCell>
-                <span className="">
-                  <span
-                    className={`text-xs flex items-center gap-1 ${
-                      coin?.change.startsWith("-")
-                        ? "text-red-500"
-                        : "text-green-500"
-                    }`}
-                  >
-                    {coin?.change.startsWith("-") ? (
-                      <TrendingDown className="w-4 h-4" />
-                    ) : (
-                      <TrendingUp className="w-4 h-4" />
-                    )}
-                    {coin?.change || "N/A"}
+                <div
+                  className={`inline-flex items-center gap-1 px-2 py-1 rounded-md ${
+                    coin?.price_change_percentage_24h < 0
+                      ? "text-red-600 "
+                      : "text-green-600 "
+                  }`}
+                >
+                  {coin?.price_change_percentage_24h < 0 ? (
+                    <TrendingDown className="w-4 h-4" />
+                  ) : (
+                    <TrendingUp className="w-4 h-4" />
+                  )}
+                  <span className="text-sm font-medium">
+                    {coin?.price_change_percentage_24h?.toFixed(2)}%
                   </span>
-                </span>
+                </div>
               </TableCell>
-              <TableCell className="text-center">{coin?.price}</TableCell>
-              <TableCell className="">{coin?.["24hVolume"]}</TableCell>
               <TableCell className="text-center">
-                {formatMarketCap(coin?.marketCap)}
+                {coin?.current_price?.toLocaleString()}
+              </TableCell>
+              <TableCell className="">
+                {coin?.total_volume?.toLocaleString()}
+              </TableCell>
+              <TableCell className="text-center">
+                {formatMarketCap(coin?.market_cap)}
               </TableCell>
               <TableCell>
-                <Sparklines data={coin?.sparkline}>
-                  <SparklinesLine style={{ fill: "none" }} />
-                  <SparklinesSpots />
+                <Sparklines data={coin?.sparkline_in_7d?.price}>
+                  <SparklinesLine
+                    style={{ strokeWidth: 2 }}
+                    color={
+                      coin?.price_change_percentage_24h < 0
+                        ? "#dc2626"
+                        : "#16a34a"
+                    }
+                  />
                 </Sparklines>
               </TableCell>
             </TableRow>

@@ -13,13 +13,13 @@ const CoinCard = ({ coin }) => {
     }).format(value);
   };
 
-  const isPositiveChange = coin?.change >= 0;
+  const isPositiveChange = coin?.price_change_percentage_24h >= 0;
 
   return (
     <Card className="group relative hover:shadow-xl transition-all duration-300 overflow-hidden bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
       <div className="absolute bottom-0 left-0 w-32 h-32 sm:w-24 sm:h-24 opacity-20 transform scale-125 translate-x-[-15%] translate-y-[10%] rotate-45">
         <Image
-          src={coin?.iconUrl}
+          src={coin?.image}
           layout="fill"
           objectFit="contain"
           alt={coin?.name}
@@ -31,7 +31,7 @@ const CoinCard = ({ coin }) => {
         <div className="flex items-center gap-2">
           <CardTitle className="text-black dark:text-white text-sm">
             {coin?.name}
-            <span className="text-gray-600"> ({coin?.symbol})</span>
+            <span className="text-gray-600 uppercase"> ({coin?.symbol})</span>
           </CardTitle>
         </div>
       </CardHeader>
@@ -40,7 +40,7 @@ const CoinCard = ({ coin }) => {
         {/* Coin Price & Change */}
         <div className="flex flex-col gap-2">
           <div className="text-lg sm:text-xl font-semibold text-black dark:text-white">
-            {formatCurrency(coin?.price)}
+            {formatCurrency(coin?.current_price)}
           </div>
           <div
             className={`py-1 rounded-md text-sm font-bold w-fit ${
@@ -56,7 +56,7 @@ const CoinCard = ({ coin }) => {
                   className="text-green-600 dark:text-green-400 mr-1"
                   size={16}
                 />
-                +{coin.change}%
+                +{coin.price_change_percentage_24h.toFixed(1)}%
               </div>
             ) : (
               <div className="flex items-center">
@@ -64,7 +64,7 @@ const CoinCard = ({ coin }) => {
                   className="text-red-600 dark:text-red-400 mr-1"
                   size={16}
                 />
-                {coin.change}%
+                +{coin.price_change_percentage_24h.toFixed(2)}%
               </div>
             )}
           </div>
@@ -72,13 +72,16 @@ const CoinCard = ({ coin }) => {
 
         {/* Small Graph on Right Side */}
         <div className="w-16 h-10">
-          <Sparklines data={coin?.sparkline} width={100} height={40}>
+          <Sparklines
+            data={coin?.sparkline_in_7d?.price}
+            width={100}
+            height={40}
+          >
             <SparklinesLine
-              style={{
-                stroke: isPositiveChange ? "#4ade80" : "#f87171",
-                fill: "none",
-                strokeWidth: 2,
-              }}
+              style={{ strokeWidth: 2 }}
+              color={
+                coin?.price_change_percentage_24h < 0 ? "#dc2626" : "#16a34a"
+              }
             />
           </Sparklines>
         </div>

@@ -23,7 +23,7 @@ const AnalyticsChart = ({ coin, selectedPeriod }) => {
         `/api/history/${coin.uuid}?timePeriod=${selectedPeriod}`
       );
       const historyData = response?.data?.data?.history || [];
-      const convertedData = historyData?.map((item, i) => {
+      const convertedData = historyData?.map((item) => {
         return {
           date: new Date(item?.timestamp * 1000).toLocaleTimeString(),
           prices: item?.price,

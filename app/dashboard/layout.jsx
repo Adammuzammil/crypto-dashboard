@@ -1,8 +1,5 @@
 import React from "react";
-import Sidebar from "../ui/dashboard/Sidebar";
-import Navbar from "../ui/dashboard/Navbar";
-import { getSession } from "../../utils/getSession";
-import Footer from "@/components/shared/Footer";
+import Navbar from "../../components/dashboard/Navbar";
 import {
   SidebarInset,
   SidebarProvider,

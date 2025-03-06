@@ -20,7 +20,7 @@ const Trending = () => {
   return (
     <div className="container mx-auto p-4 px-6 mt-8 mb-6">
       <div className="my-6">
-        <h1 className="text-3xl font-bold dark:text-white text-black">
+        <h1 className="text-3xl text-center font-bold dark:text-white text-black">
           Trending Coins
         </h1>
       </div>

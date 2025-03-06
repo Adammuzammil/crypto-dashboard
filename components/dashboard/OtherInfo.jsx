@@ -1,29 +1,30 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import BlockChainLinks from "./info/BlockChainLinks";
+import BlockChainLinks from "./BlockChainLinks";
 import Link from "next/link";
 import { Facebook, Github } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaFacebook, FaGithub, FaReddit } from "react-icons/fa";
-import Categories from "./info/Categories";
+import Categories from "./Categories";
 import { BiSolidUpArrow, BiSolidDownArrow } from "react-icons/bi";
 
-const OtherInfo = ({ name }) => {
-  const id = name.toLowerCase();
-  const url = `https://api.coingecko.com/api/v3/coins/${id}`;
-  const [info, setInfo] = useState();
+const OtherInfo = ({ info }) => {
+  console.log(info);
+  // const id = name?.toLowerCase();
+  // const url = `https://api.coingecko.com/api/v3/coins/${id}`;
+  // const [info, setInfo] = useState();
 
-  useEffect(() => {
-    const getPriceData = async () => {
-      const response = await fetch(url);
-      const data = await response.json();
-      // console.log(data);
-      setInfo(data);
-    };
+  // useEffect(() => {
+  //   const getPriceData = async () => {
+  //     const response = await fetch(url);
+  //     const data = await response.json();
+  //     // console.log(data);
+  //     setInfo(data);
+  //   };
 
-    getPriceData();
-  }, [name]);
+  //   getPriceData();
+  // }, [name]);
 
   const cleanUrl = (url) => {
     if (typeof url === "string") {
@@ -58,16 +59,20 @@ const OtherInfo = ({ name }) => {
       <div className="flex flex-col justify-center gap-8">
         {/* Price Info */}
         <div className="flex items-center justify-between">
-          <span className="text-gray-400">Blockchain</span>
+          <span className="text-black dark:text-white">Blockchain</span>
           <BlockChainLinks info={info} />
         </div>
 
         {/* Website */}
         <div className="flex items-center justify-between">
-          <span className="text-gray-400">Website</span>
+          <span className="text-black dark:text-white">Website</span>
           <div className="flex items-center gap-2 bg-black p-1 px-2 rounded-lg">
             {domainNames.map(({ domain, url }, i) => (
-              <span key={i} value={domain} className="text-xs font-bold">
+              <span
+                key={i}
+                value={domain}
+                className="text-xs font-bold text-white"
+              >
                 {domain}
               </span>
             ))}
@@ -76,17 +81,17 @@ const OtherInfo = ({ name }) => {
 
         {/* Category */}
         <div className="flex items-center justify-between">
-          <span className="text-gray-400">Categories</span>
+          <span className="text-black dark:text-white">Categories</span>
           <Categories info={info} />
         </div>
 
         {/* WhitePaper  */}
         {info?.links?.whitepaper && (
           <div className="flex items-center justify-between">
-            <span className="text-gray-400">Whitepaper</span>
+            <span className="text-black dark:text-white">Whitepaper</span>
             <Link
               href={info?.links?.whitepaper}
-              className="bg-black p-1 px-2 rounded-lg text-xs font-bold"
+              className="bg-black p-1 px-2 rounded-lg text-xs text-white font-bold"
             >
               Whitepaper
             </Link>
@@ -95,11 +100,11 @@ const OtherInfo = ({ name }) => {
 
         {/* Community */}
         <div className="flex items-center justify-between">
-          <span className="text-gray-400">Community</span>
+          <span className="text-black dark:text-white">Community</span>
 
           <div className="flex flex-col md:flex-row items-center gap-3">
             {info?.links?.twitter_screen_name && (
-              <div className="flex items-center gap-1 bg-black p-1 px-2 rounded-lg text-xs font-bold">
+              <div className="flex items-center gap-1 bg-black  text-white p-1 px-2 rounded-lg text-xs font-bold">
                 <Link
                   href={`https://twitter.com/${info.links.twitter_screen_name}`}
                   target="_blank"
@@ -111,7 +116,7 @@ const OtherInfo = ({ name }) => {
               </div>
             )}
             {info?.links?.facebook_username && (
-              <div className="flex items-center gap-3 bg-black p-1 px-2 rounded-lg text-xs font-bold">
+              <div className="flex items-center gap-3 bg-black text-white p-1 px-2 rounded-lg text-xs font-bold">
                 <Link
                   href={`https://facebook.com/${info.links.facebook_username}`}
                   target="_blank"
@@ -122,7 +127,7 @@ const OtherInfo = ({ name }) => {
                 <p className="text-xs">Facebook</p>
               </div>
             )}
-            <div className="flex items-center gap-2 bg-black p-1 px-2 rounded-lg">
+            <div className="flex items-center gap-2 bg-black text-white p-1 px-2 rounded-lg">
               {domainNames.map(({ domain, url }, i) => (
                 <span key={i} value={domain} className="text-xs font-bold">
                   {domain}
@@ -134,9 +139,9 @@ const OtherInfo = ({ name }) => {
 
         {/* Github */}
         <div className="flex items-center justify-between">
-          <span className="text-gray-400">Github</span>
+          <span className="text-black dark:text-white">Github</span>
           {info?.links?.repos_url?.github[0] && (
-            <div className="flex items-center gap-3 bg-black p-1 px-2 rounded-lg text-xs font-bold">
+            <div className="flex items-center gap-3 bg-black text-white p-1 px-2 rounded-lg text-xs font-bold">
               <Link
                 href={info?.links?.repos_url?.github[0]}
                 target="_blank"
@@ -151,9 +156,9 @@ const OtherInfo = ({ name }) => {
 
         {/* Social */}
         <div className="flex items-center justify-between">
-          <span className="text-gray-400">Social</span>
+          <span className="text-black dark:text-white">Social</span>
           {info?.links?.subreddit_url && (
-            <div className="flex items-center gap-3 bg-black p-1 px-2 rounded-lg text-xs font-bold">
+            <div className="flex items-center gap-3 bg-black text-white p-1 px-2 rounded-lg text-xs font-bold">
               <Link
                 href={info?.links?.subreddit_url}
                 target="_blank"
@@ -168,7 +173,7 @@ const OtherInfo = ({ name }) => {
 
         {/* Sentiment */}
         <div className="flex items-center justify-between">
-          <span className="text-gray-400">Sentiment</span>
+          <span className="text-black dark:text-white">Sentiment</span>
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <span
