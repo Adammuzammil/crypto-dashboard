@@ -1,4 +1,3 @@
-// utils/auth.js
 import Cookies from "js-cookie";
 
 export const getAccessToken = () => {

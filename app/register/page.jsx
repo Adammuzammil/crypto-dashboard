@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase/firebase-config";
 import { useRouter } from "next/navigation";
-import { ShieldAlert } from "lucide-react";
+import { Eye, EyeOff, ShieldAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Logo from "@/components/shared/Logo";
 
@@ -23,6 +23,7 @@ const Register = () => {
     email: false,
     password: false,
   });
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const validateEmail = (email) => {
@@ -152,28 +153,37 @@ const Register = () => {
             )}
           </div>
 
-          <div>
+          <div className="relative">
             <Label className="text-sm font-medium text-gray-900 dark:text-gray-300">
               Password
             </Label>
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                if (touched.password) {
-                  setErrors((prev) => ({
-                    ...prev,
-                    password: validatePassword(e.target.value)
-                      ? ""
-                      : prev.password,
-                  }));
-                }
-              }}
-              onBlur={handleBlur("password")}
-              placeholder="••••••••"
-              className="mt-2 bg-white dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 focus:ring-1 focus:ring-gray-900 dark:focus:ring-gray-600 h-11 text-gray-900 dark:text-gray-200"
-            />
+            <div className="relative mt-2">
+              <Input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (touched.password) {
+                    setErrors((prev) => ({
+                      ...prev,
+                      password: validatePassword(e.target.value)
+                        ? ""
+                        : prev.password,
+                    }));
+                  }
+                }}
+                onBlur={handleBlur("password")}
+                placeholder="••••••••"
+                className="mt-2 bg-white dark:bg-gray-900/50 border-gray-300 dark:border-gray-700 focus:ring-1 focus:ring-gray-900 dark:focus:ring-gray-600 h-11 text-gray-900 dark:text-gray-200"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
             {errors.password && (
               <p className="mt-1 text-sm text-red-600 dark:text-red-400">
                 {errors.password}

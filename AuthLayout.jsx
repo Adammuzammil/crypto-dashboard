@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { getAccessToken } from "@/utils/getAccessToken";
-import { getUserInfo } from "./utils/jwtDecode";
 
 const publicRoutes = ["/login", "/register"]; // Add any public routes here
 
@@ -22,10 +21,6 @@ export default function AuthLayout({ children }) {
       } else if (token && publicRoutes.includes(pathname)) {
         router.replace("/dashboard");
       } else {
-        if (token) {
-          const userInfo = getUserInfo();
-          setUser(userInfo);
-        }
         setIsLoading(false);
       }
     };
