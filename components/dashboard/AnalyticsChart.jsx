@@ -17,78 +17,26 @@ const AnalyticsChart = ({ coin, selectedPeriod }) => {
   const [history, setHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getCoinsHistory = async () => {
+  const getCoinsHistory = useCallback(async () => {
     try {
       const response = await axios.get(
         `/api/history/${coin.uuid}?timePeriod=${selectedPeriod}`
       );
       const historyData = response?.data?.data?.history || [];
-      const convertedData = historyData?.map((item) => {
-        return {
-          date: new Date(item?.timestamp * 1000).toLocaleTimeString(),
-          prices: item?.price,
-        };
-      });
-      //   console.log(convertedData);
+      const convertedData = historyData.map((item) => ({
+        date: new Date(item.timestamp * 1000).toLocaleTimeString(),
+        prices: item.price,
+      }));
       setHistory(convertedData);
       setIsLoading(false);
     } catch (error) {
       console.log(error.message);
     }
-  };
-
-  console.log("Coin", coin);
+  }, [coin.uuid, selectedPeriod]);
 
   useEffect(() => {
     getCoinsHistory();
-  }, [coin, selectedPeriod]);
-
-  //   const filteredHistory = useMemo(() => {
-  //     const now = new Date();
-  //     return history.filter((item) => {
-  //       const date = new Date(item.timestamp);
-  //       switch (selectedPeriod) {
-  //         case "24h":
-  //           return date >= new Date(now - 24 * 60 * 60 * 1000);
-  //         case "7d":
-  //           return date >= new Date(now - 7 * 24 * 60 * 60 * 1000);
-  //         case "30d":
-  //           return date >= new Date(now - 30 * 24 * 60 * 60 * 1000);
-  //         case "1y":
-  //           return date >= new Date(now - 365 * 24 * 60 * 60 * 1000);
-  //         default:
-  //           return true;
-  //       }
-  //     });
-  //   }, [history, selectedPeriod]);
-
-  //   console.log(filteredHistory);
-
-  //   const formatDateForDisplay = (date, period) => {
-  //     switch (period) {
-  //       case "24h":
-  //         return date.toLocaleTimeString("en-US", {
-  //           hour: "numeric",
-  //           minute: "numeric",
-  //         });
-  //       case "7d":
-  //         return date.toLocaleDateString("en-US", {
-  //           weekday: "short",
-  //         });
-  //       case "30d":
-  //         return date.toLocaleDateString("en-US", {
-  //           day: "numeric",
-  //           month: "short",
-  //         });
-  //       case "1y":
-  //         return date.toLocaleDateString("en-US", {
-  //           month: "short",
-  //           year: "numeric",
-  //         });
-  //       default:
-  //         return date.toLocaleString("en-US");
-  //     }
-  //   };
+  }, [getCoinsHistory]);
 
   function CustomTooltip({ payload, label, active }) {
     if (active) {

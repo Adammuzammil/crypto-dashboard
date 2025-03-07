@@ -7,6 +7,7 @@ import CoinChart from "./CoinChart";
 import PriceData from "./PriceData";
 import CointextInfo from "./CointextInfo";
 import OtherInfo from "./OtherInfo";
+import Image from "next/image";
 
 const SingleCoin = ({ data }) => {
   const [coin, setCoin] = useState(data?.id);
@@ -40,10 +41,13 @@ const SingleCoin = ({ data }) => {
       <div>
         <div>
           <div className="flex gap-5 items-center">
-            <img
+            <Image
               src={data?.image?.large}
               alt={data?.name}
-              className="h-24 w-24 self-start rounded-full shadow-md"
+              width={96} // equivalent to h-24 (24 * 4)
+              height={96} // equivalent to w-24 (24 * 4)
+              className="self-start rounded-full shadow-md"
+              priority
             />
             <div className="flex flex-col gap-6 justify-between py-2">
               <h2 className="text-lg font-bold">

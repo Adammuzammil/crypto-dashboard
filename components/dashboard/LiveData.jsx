@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
 import Link from "next/link";
+import Image from "next/image";
 
 const LiveData = () => {
   const [coins, setCoins] = useState();
@@ -76,7 +77,14 @@ const LiveData = () => {
             <TableRow key={i}>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <img src={coin?.image} alt={coin.name} className="w-7 h-7" />
+                  <Image
+                    src={coin?.image}
+                    alt={coin.name}
+                    width={28}
+                    height={28}
+                    className="w-7 h-7"
+                  />
+
                   <div className="flex items-center gap-2">
                     <span> {coin.name}</span>
                     <span className="text-xs text-gray-400 uppercase">

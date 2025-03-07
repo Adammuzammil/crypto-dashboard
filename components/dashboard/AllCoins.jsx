@@ -11,12 +11,13 @@ import {
 } from "@/components/ui/table";
 import { ArrowUpDown, Star, TrendingDown, TrendingUp } from "lucide-react";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { Sparklines, SparklinesLine, SparklinesSpots } from "react-sparklines";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const AllCoins = () => {
   const [coins, setCoins] = useState([]);
@@ -29,25 +30,26 @@ const AllCoins = () => {
   const coinsPerPage = 10;
 
   // Fetch coins data based on the page number
-  const fetchCoins = async (page) => {
-    if (isLoading) return;
-
-    setIsLoading(true);
-    try {
-      const response = await axios.get(`/api/coins?page=${page}`);
-      const newCoins = response.data.coins;
-
-      setCoins(newCoins);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const fetchCoins = useCallback(
+    async (page) => {
+      if (isLoading) return;
+      setIsLoading(true);
+      try {
+        const response = await axios.get(`/api/coins?page=${page}`);
+        const newCoins = response.data.coins;
+        setCoins(newCoins);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [isLoading]
+  );
 
   useEffect(() => {
     fetchCoins(currentPage);
-  }, [currentPage]);
+  }, [currentPage, fetchCoins]);
 
   console.log(coins);
 
@@ -167,11 +169,14 @@ const AllCoins = () => {
                       href={`/coins/${coin?.id}`}
                       className="flex items-center gap-3"
                     >
-                      <img
+                      <Image
                         src={coin?.image}
                         alt={coin.name}
-                        className="w-7 h-7 rounded-full"
+                        width={28} // w-7
+                        height={28} // h-7
+                        className="rounded-full"
                       />
+
                       <div className="flex flex-col">
                         <span className="font-medium dark:text-gray-100">
                           {coin.name}

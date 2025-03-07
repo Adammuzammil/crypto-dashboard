@@ -1,23 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const PriceData = ({ name }) => {
-  // const id = name?.toLowerCase();
-  // const url = `https://api.coingecko.com/api/v3/coins/${id}`;
-  // const [price, setPrice] = useState();
-
-  // useEffect(() => {
-  //   const getPriceData = async () => {
-  //     const response = await fetch(url);
-  //     const data = await response.json();
-  //     // console.log(data);
-  //     setPrice(data);
-  //   };
-
-  //   getPriceData();
-  // }, [name]);
-
   function formatCurrency(value, locale = "en-US", currency = "USD") {
     return new Intl.NumberFormat(locale, {
       style: "currency",
@@ -28,7 +13,14 @@ const PriceData = ({ name }) => {
   return (
     <div className="bg-white dark:bg-card rounded-lg shadow mt-6 p-8 px-6">
       <div className="flex gap-5 items-center">
-        <img src={name?.image?.large} alt="" className="w-10 h-10" />
+        <Image
+          src={name?.image?.large}
+          alt={`${name?.id} logo`}
+          width={40}
+          height={40}
+          className="w-10 h-10"
+        />
+
         <div className="">
           <h3 className="text-sm text-gray-400">
             {name?.symbol?.toUpperCase()}

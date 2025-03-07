@@ -13,6 +13,7 @@ import {
 import SingleChart from "./SingleChart";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import Image from "next/image";
 
 const TIME_PERIODS = [
   { value: "1", label: "24H" },
@@ -34,7 +35,6 @@ const Chart = () => {
           "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd"
         );
         const data = await response.json();
-        console.log(data);
 
         if (!Array.isArray(data)) {
           throw new Error("Invalid data format received");
@@ -80,12 +80,15 @@ const Chart = () => {
                   className="cursor-pointer hover:bg-accent"
                 >
                   <div className="flex items-center gap-2">
-                    <img
+                    <Image
                       src={coin.image}
                       alt={coin.name}
-                      className="h-5 w-5 object-contain"
+                      width={20}
+                      height={20}
+                      className="object-contain"
                       loading="lazy"
                     />
+
                     <span className="truncate">{coin.name}</span>
                   </div>
                 </SelectItem>

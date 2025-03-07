@@ -1,5 +1,6 @@
 "use client";
 import { GlareCard } from "@/components/ui/glare-card";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -26,8 +27,12 @@ const Trending = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-6 pt-4">
         {trending?.map((coin, i) => (
-          <Link href={`/coins/${coin?.item?.id}`} className="cursor-pointer">
-            <div key={i}>
+          <Link
+            href={`/coins/${coin?.item?.id}`}
+            key={i}
+            className="cursor-pointer"
+          >
+            <div>
               <div className="rounded-lg bg-white shadow-lg p-2 px-4 relative bg-gradient-to-r from-gray-500 to-blue-500 bg-[length:200%_200%] bg-left hover:bg-right transition-all duration-500">
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center gap-2 text-white dark:text-black">
@@ -54,10 +59,12 @@ const Trending = () => {
                   </div>
                 </div>
 
-                <img
+                <Image
                   src={coin?.item?.large}
-                  alt=""
-                  className="absolute top-2/4 -translate-y-2/4 rounded-full h-24 w-24 -right-5"
+                  alt={coin?.item?.name || "coin"}
+                  width={96} // equivalent to w-24
+                  height={96} // equivalent to h-24
+                  className="absolute top-2/4 -translate-y-2/4 rounded-full -right-5"
                 />
               </div>
             </div>

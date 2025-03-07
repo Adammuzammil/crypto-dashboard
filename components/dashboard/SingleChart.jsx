@@ -73,6 +73,21 @@ const SingleChart = ({ id, selectedPeriod, selectedTimeFrame }) => {
     return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
+  const getDateFormat = (timeFrame) => {
+    switch (timeFrame) {
+      case "1":
+        return "HH:mm";
+      case "7":
+        return "MMM dd ";
+      case "30":
+        return "MMM dd";
+      case "365":
+        return "MMM yyyy";
+      default:
+        return "HH:mm";
+    }
+  };
+
   useEffect(() => {
     const formatData = (rawData) => {
       const periodData = rawData?.[selectedPeriod] || [];
@@ -82,20 +97,6 @@ const SingleChart = ({ id, selectedPeriod, selectedTimeFrame }) => {
       }));
     };
 
-    const getDateFormat = (timeFrame) => {
-      switch (timeFrame) {
-        case "1":
-          return "HH:mm";
-        case "7":
-          return "MMM dd ";
-        case "30":
-          return "MMM dd";
-        case "365":
-          return "MMM yyyy";
-        default:
-          return "HH:mm";
-      }
-    };
     const getData = async () => {
       try {
         const response = await fetch(
@@ -111,7 +112,7 @@ const SingleChart = ({ id, selectedPeriod, selectedTimeFrame }) => {
     };
 
     getData();
-  }, [name, selectedPeriod, selectedTimeFrame]);
+  }, [id, selectedPeriod, selectedTimeFrame]);
 
   function CustomTooltip({ payload, label, active }) {
     if (active && payload?.[0]) {

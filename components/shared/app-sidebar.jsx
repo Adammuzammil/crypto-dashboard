@@ -38,6 +38,7 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { auth } from "@/firebase/firebase-config";
 import { signOut } from "firebase/auth";
+import Image from "next/image";
 
 // Menu items.
 const items = [
@@ -93,12 +94,15 @@ function AppSidebar() {
                     open ? "w-10 h-10" : "w-10 h-10"
                   }`}
                 >
-                  <img
+                  <Image
                     src="/kai.svg"
                     alt="Kaizen Logo"
+                    width={40}
+                    height={40}
                     className={`object-contain transition-all duration-200 ${
                       open ? "w-8 h-8" : "w-full h-full p-1 pr-2"
                     }`}
+                    priority
                   />
                 </div>
                 <div className="flex flex-col gap-1.5 leading-none">

@@ -42,7 +42,7 @@ const GlobalStats = () => {
 
   useEffect(() => {
     fetchGlobalStats();
-  }, []);
+  }, [fetchGlobalStats]);
 
   const formatNumber = (num) => {
     if (num >= 1e12) return (num / 1e12).toFixed(2) + "T";

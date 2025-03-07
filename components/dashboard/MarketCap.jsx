@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import axios from "axios";
 import { AlertCircle, TrendingDown, TrendingUp } from "lucide-react";
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
 const MarketCap = () => {
@@ -38,7 +39,7 @@ const MarketCap = () => {
 
   useEffect(() => {
     fetchCoins();
-  }, []);
+  }, [fetchCoins]);
 
   function formatMarketCap(marketCap) {
     if (marketCap >= 1e9) {
@@ -104,12 +105,15 @@ const MarketCap = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="relative">
-                  <img
+                  <Image
                     src={coin?.image}
                     alt={`${coin?.name} logo`}
+                    width={32}
+                    height={32}
                     className="h-8 w-8 object-contain"
                     loading={index > 2 ? "lazy" : "eager"}
                   />
+
                   <span className="absolute top-1/2 -left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs text-muted-foreground ml-1">
                     {index + 1}
                   </span>
